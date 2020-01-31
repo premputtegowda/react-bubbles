@@ -11,7 +11,7 @@ const Login = () => {
                                   })
 
   let history = useHistory();
-  
+
   const handleChange = (e) => {
     e.preventDefault()
     SetUser({...user, [e.target.name]: e.target.value})
@@ -27,7 +27,7 @@ const Login = () => {
         username:'',
         password:''
       })
-      history.push('/bubbles')
+      history.push('/bubble-page')
     })
     .catch(err => console.log(err))
   }
