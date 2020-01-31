@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom'
+import axios from 'axios';
 
 const Login = () => {
   // make a post request to retrieve a token from the api
@@ -8,14 +10,26 @@ const Login = () => {
                                     password:''
                                   })
 
+  let history = useHistory();
+  
   const handleChange = (e) => {
     e.preventDefault()
     SetUser({...user, [e.target.name]: e.target.value})
     
   }
 
-  const handleSubmit = e {
-    axios.post()
+  const handleSubmit = e  => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/api/login", user)
+    .then(res => {
+      localStorage.setItem('token',res.data.payload)
+      SetUser({...user,
+        username:'',
+        password:''
+      })
+      history.push('/bubbles')
+    })
+    .catch(err => console.log(err))
   }
   return (
     <>
@@ -36,7 +50,7 @@ const Login = () => {
               value = {user.password}
               onChange = {handleChange}
             />
-            <button>Login</button>
+            <button onClick={handleSubmit}>Login</button>
           </form>
       </div>
     </>
